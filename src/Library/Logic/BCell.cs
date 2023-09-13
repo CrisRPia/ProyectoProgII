@@ -1,5 +1,8 @@
 namespace Library;
 
+/// <summary>
+/// Represents a cell in a Battleships board.
+/// </summary>
 [Flags]
 public enum BCell {
     Ship,

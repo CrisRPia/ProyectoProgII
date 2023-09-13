@@ -1,33 +1,29 @@
 namespace Library;
 
+using System.Numerics;
+
 public static class Extensions
 {
     /// <summary>
     /// Returns a range including 'from' and excluding 'to'.
-    /// Source, modified: https://stackoverflow.com/questions/915745/thoughts-on-foreach-with-enumerable-range-vs-traditional-for-loop/
+    /// If step is set to zero, it will instead default to 1.
+    /// Modified from this source: https://stackoverflow.com/questions/915745/thoughts-on-foreach-with-enumerable-range-vs-traditional-for-loop/
     /// </summary>
     public static IEnumerable<T> To<T>(this T from, T to, T step = default)
-        where T : struct, IComparable<T>
+        where T : struct, INumber<T>
     {
-        dynamic current = from;
-        dynamic increment = EqualityComparer<T>.Default.Equals(step, default(T))
-            ? 1
-            : step;
-
-        if (increment == 0)
+        if (T.IsZero(step))
         {
-            throw new ArgumentOutOfRangeException(
-                nameof(step),
-                "step cannot be zero"
-            );
+            step = T.One;
         }
 
         while (
-            (increment > 0 == current.CompareTo(to) < 0) && !current.Equals(to)
+            (step.CompareTo(T.Zero) > 0 == from.CompareTo(to) < 0)
+            && !from.Equals(to)
         )
         {
-            yield return current;
-            current += increment;
+            yield return from;
+            from += step;
         }
     }
 }

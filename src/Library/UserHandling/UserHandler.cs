@@ -9,7 +9,12 @@ public class BattleshipUserHandler {
         UserID2 = id2;
     }
 
+    /// <summary>
+    /// Handles the main game loop between two players.
+    /// </summary>
     public async void HandleGame() {
+        // This is done to prevent the warning.
+        await Task.Delay(1);
         throw new NotImplementedException();
     }
 }

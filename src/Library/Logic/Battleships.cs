@@ -1,12 +1,13 @@
 ﻿namespace Library;
 
-using System.Drawing;
-
-public class BattleshipsGame
+/// <summary>
+/// Handles battleships game logic once the board is set.
+/// </summary>
+public class BGame
 {
-    public BattleShipsBoard Board { get; set; }
+    public BBoard Board { get; set; }
 
-    public BattleshipsGame(BattleShipsBoard board)
+    public BGame(BBoard board)
     {
         throw new NotImplementedException();
     }

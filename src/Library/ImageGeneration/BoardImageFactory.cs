@@ -1,7 +1,7 @@
 namespace Library;
 
 public static class BImageFactory {
-    public static Image ImageFromOwnBoard(BattleShipsBoard board) {
+    public static Image ImageFromOwnBoard(BBoard board) {
         throw new NotImplementedException();
     }
 
@@ -22,7 +22,7 @@ public static class BImageFactory {
     //     throw new NotImplementedException();
     // }
 
-    public static Image ImageFromEnemyBoard(BattleShipsBoard board) {
+    public static Image ImageFromEnemyBoard(BBoard board) {
         throw new NotImplementedException();
     }
 }

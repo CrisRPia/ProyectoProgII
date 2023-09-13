@@ -1,8 +1,9 @@
 namespace Library;
 
-using System.Drawing;
-
-public struct BattleShipsBoard {
+/// <summary>
+/// Represents the board of a game of Battleships.
+/// </summary>
+public struct BBoard {
     /// <summary>
     /// Generates a bidimensional array that represents the board state.
     /// </summary>
@@ -23,7 +24,6 @@ public struct BattleShipsBoard {
     {
         throw new NotImplementedException();
     }
-
 
     public int Width { get; }
     public int Height { get; }

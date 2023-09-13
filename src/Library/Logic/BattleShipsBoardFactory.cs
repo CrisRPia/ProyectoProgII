@@ -2,17 +2,20 @@ namespace Library;
 
 using System.Drawing;
 
-public class BattleshipsBoardFactory {
-    public BattleShipsBoard Board { get; set; }
-
-    public BattleshipsBoardFactory(BattleShipsBoard board = default) {
-        Board = board;
-    }
-
+/// <summary>
+/// Stores extension methods for Ship storage manipulation in BattleShipsBoard.
+/// </summary>
+public static class BattleshipsBoardFactory
+{
     /// <summary>
     /// Place ship if valid.
     /// </summary>
-    public bool Place(Ship ship, Point p, Axis vertical)
+    public static bool AddShip(
+        this BBoard board,
+        Ship ship,
+        Point p,
+        Axis vertical
+    )
     {
         throw new NotImplementedException();
     }
@@ -20,8 +23,8 @@ public class BattleshipsBoardFactory {
     /// <summary>
     /// Removes a ship at the given coordinates.
     /// </summary>
-
-    public void Remove() {
+    public static void RemoveShip(this BBoard board, Point p)
+    {
         throw new NotImplementedException();
     }
 }
