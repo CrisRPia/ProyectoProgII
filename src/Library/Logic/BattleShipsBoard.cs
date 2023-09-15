@@ -3,14 +3,25 @@ namespace Library;
 /// <summary>
 /// Represents the board of a game of Battleships.
 /// </summary>
-public struct BBoard {
+public struct BBoard
+{
     /// <summary>
-    /// Generates a bidimensional array that represents the board state.
+    /// Calculates the value that should be at the position.
     /// </summary>
-    public BCell[,] GetBoard()
+    public BCell this[Point p]
     {
-        throw new NotImplementedException();
+        get => this[p.X, p.Y];
     }
+
+    /// <summary>
+    /// Calculates the value that should be at the position.
+    /// </summary>
+    public BCell this[int x, int y]
+    {
+        get => throw new NotImplementedException();
+    }
+
+    public BCell[,] ToArray() => throw new NotImplementedException();
 
     /// <summary>
     /// Maps Points to ships in the board.
@@ -20,10 +31,7 @@ public struct BBoard {
     /// <summary>
     /// Checks whether two ships intersect.
     /// </summary>
-    public Point[] Intersection()
-    {
-        throw new NotImplementedException();
-    }
+    public Point[] Intersection() => throw new NotImplementedException();
 
     public int Width { get; }
     public int Height { get; }
