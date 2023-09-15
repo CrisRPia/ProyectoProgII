@@ -7,7 +7,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Hice esto por testing, pueden todo lo de adentro de main.
+        // Hice esto por testing, pueden eliminar todo lo de adentro de main.
         IEnumerable<int> a = 5.To(10).Where(i => i % 2 == 0);
         foreach (var i in a)
             Console.WriteLine(i);
