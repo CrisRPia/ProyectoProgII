@@ -1,138 +1,90 @@
 ```mermaid
 
 ---
-title: RPG
+title: Modelo de dominio
 ---
 
 classDiagram
     direction LR
     %% Classes
-    class Character {
+
+    class BattleshipsBoardFactory{
+        + Add(Ship ship, Point p): void
+        + Remove(Ship ship, Point p): void
+        + ToPlayableBattleshipsBoard(): PlayableBattleshipsBoard
+    }
+    class BattleshipsBoard{
         <<abstract>>
-        + Name(get; set;): string
-        - level: double
-        + Level(get; set;): double
-        + Stats(get;) Stats
-        # maxHealth: int
-        + MaxHealth(get; set;): int
-        # health: double
-        + Health(get; set;): double
-        + IsAlive(get;): bool
-        + Attack(Character target): void
-        + LevelUp(int levels): void
-        + Equip(Item i): abstract bool
-        + Unequip(Item i): abstract void
     }
-    class InventoryManager~T~ {
-        <<IEnumerable>>
-        + StorageCapacity(get; set;): int
-        + UsedCapacity(get;): int
-    }
-    class Stack~T~ {
-        <<struct>>
-        + Item: T
-        + Amount: int
-    }
-    class ActionResult {
-        <<enum>>
-        Success
-        CriticalSuccess
-        Miss
-    }
-    class SpellBook {
-        + AddSpell(Spell): bool
-        + RemoveSpell(Spell): void
-    }
-    class MagicalBeing {
+    class Board{
         <<abstract>>
-        + Mana(get; set;): int
+        +Width(get; set;) : int
+        +Height(get; set;) : int
     }
-    class Wizard{
-        + Cast(Character target): bool
+    class PlayableBattleshipsBoard{
+        + State (get;): GameState
     }
-    class Spell~T~ {
-        + Description: string
-        + Name: string
-        + Effect(T): delegate ActionResult
+    class Player{
+        + Name (get; set;): string
+        + Id (get; set;): int
     }
-    class Elf{
-        + Heal(target)
+    class Cell{
+        <<[Flags]enum>>
+        Ship,
+        Empty,
+        Attacked,
+        Submerged,
+        Hit = Ship | Attacked,
     }
-    class Dwarf{
-        + Craft(item, item2): item
+    class Ship{
+        + IsSubmerged() : bool
     }
-    class Item {
-        <<interface>>
-        + Description(get;): string
-        + Name(get;): string
-        + Stats(get;): Stats
-        + Multipliers(get;): Stats
-        + Kind(get;): ItemKind
+    class Match{
+        + PlayerToAttack(): Player?
     }
-    class ItemKind {
-        <<enum (Flags)>>
-        TwoHandedWeapon,
-        OneHandedWeapon,
-        Helmet,
-        Boots,
-        Gloves,
-        Chestplate,
-        Leggins,
-        Magical,
-        Weapon: TwoHandedWeapon | OneHandedWeapon,
-        Consumable,
-    }
-    class Stats {
+    class Move{
         <<struct>>
-        + Strength: double
-        + Perception: double
-        + Endurance: double
-        + Charisma: double
-        + Intelligence: double
-        + Agility: double
-        + Luck: double
-        + Randomize(points): Stats
-        + +(self, other): Stats
-        + *(self, other): Stats
-        + -(self, other): Stats
+        +Row : int
+        +Column : int
     }
 
+
     %% Inheritance
-    Character <|-- MagicalBeing
-    MagicalBeing <|-- Elf
-    MagicalBeing <|-- Wizard
-    Character <|-- Dwarf
-    Item <|-- SpellBook
+    %% Character <|-- MagicalBeing
+    BattleshipsBoard <|-- BattleshipsBoardFactory : Implements
+    BattleshipsBoard <|-- PlayableBattleshipsBoard: Implements
+    Board <|-- Ship : Implements
+    Board <|-- BattleshipsBoard : Implements
+    
+
 
     %% Realization
     %% ActionResult --|> Dwarf
 
+
     %% Association
-    %% Spell "N" -- "N" MagicalBeing : Ejemplo de sintaxis.
-    SpellBook "N" -- "N" Spell: Stores
-    InventoryManager "N" -- "N" Stack: Stores
-    Stack "1" -- "1" Item: Stores
-    Character "N" -- "N" Item: Equips
-    Character "1" -- "1" Stats: BaseStats
-    Character "1" -- "1" Stats: ClassStatsBiases
-    Item "1" -- "2" Stats: Base stats\n and multipliers
+    %% Spell "N" -- "N" MagicalBeing : Ejemplo de sintaxis. 
+    Player "2" -- "1..N" Match
+    Move "N" -- "N" PlayableBattleshipsBoard
 
     %% Composition
-    Wizard "1" *-- "1" SpellBook
-    Character "1" *-- "1" InventoryManager
-    Item "1" *-- "1" ItemKind
+    %%Wizard "1" *-- "1" SpellBook
+    Board "1" *-- "1..N" Cell
+    BattleshipsBoard"1" *-- "0..N" Ship
 
     %% Aggregation
     %% SpellBook "1" --o "1" Wizard : Ejemplo de sintaxis
 
     %% Link
-    Character "1" .. "1" Character : Attack
+    %%Character "1" .. "1" Character : Attack
+
+    %%Dependency
+    %%classK ..> classL
+    Match ..> Board : Uses
+
+    BattleshipsBoardFactory ..> PlayableBattleshipsBoard: Makes
 
     %% Notes
-    note for Stats "Inteligence, in wizards, determines magical capability.\n Strength ~= attack.\n Endurance ~= defence."
-    note for SpellBook "All wizards must have a SpellBook,\n and a SpellBook can only be handled by a wizard."
-    note for Elf "Elves do not require of a SpellBook to cast heal."
-    note for ItemKind "Profe, tiene sentido darle cardinalidad siendo que es\n una constante?"
+    %%note for Stats "Inteligence, in wizards, determines magical capability.\n Strength ~= attack.\n Endurance ~= defence."
 
 ```
-asda
